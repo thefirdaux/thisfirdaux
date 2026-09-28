@@ -16,7 +16,15 @@ const successCard = successOverlay.querySelector(".card");
 receipt.addEventListener("change", () => {
   const file = receipt.files[0];
   receiptLabel.textContent = file ? file.name : defaultReceiptText;
-  uploadBox.removeAttribute("aria-invalid");
+  const error = file && receiptError(file);
+  if (error) {
+    uploadBox.setAttribute("aria-invalid", "true");
+    showMessage(error, true);
+  } else {
+    uploadBox.removeAttribute("aria-invalid");
+    showMessage("", false);
+  }
+  updateFormState();
 });
 
 const fields = form.querySelectorAll(".field");
@@ -38,9 +46,13 @@ function isFieldValid(input) {
   return input.checkValidity() && input.value.trim() !== "";
 }
 
-// Switch the upload button to Variant 2 once name, email and phone are all filled in.
-function updateUploadState() {
-  uploadBox.classList.toggle("is-ready", [...fields].every(isFieldValid));
+// Upload button turns blue (Variant 2) once name, email and phone are filled in;
+// Tempah Slot stays grey until a valid receipt has been chosen as well.
+function updateFormState() {
+  const fieldsReady = [...fields].every(isFieldValid);
+  const file = receipt.files[0];
+  uploadBox.classList.toggle("is-ready", fieldsReady);
+  submitButton.classList.toggle("is-locked", !(fieldsReady && file && !receiptError(file)));
 }
 
 fields.forEach((input) => {
@@ -50,9 +62,11 @@ fields.forEach((input) => {
       if (phoneInput.checkValidity() && message.textContent === PHONE_ERROR) showMessage("", false);
     }
     input.removeAttribute("aria-invalid");
-    updateUploadState();
+    updateFormState();
   });
 });
+
+updateFormState();
 
 // Flag a too-short phone number as soon as the user leaves the field.
 phoneInput.addEventListener("blur", () => {
@@ -160,7 +174,7 @@ form.addEventListener("submit", async (event) => {
     form.reset();
     checkPhone();
     receiptLabel.textContent = defaultReceiptText;
-    updateUploadState();
+    updateFormState();
     showSuccess();
   } catch (err) {
     console.error(err);

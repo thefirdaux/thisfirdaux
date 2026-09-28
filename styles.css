@@ -243,7 +243,13 @@ p {
   color: var(--color-text);
   font: 600 15px/normal "Inter", system-ui, sans-serif;
   cursor: pointer;
-  transition: transform 0.1s ease, filter 0.15s ease;
+  transition: transform 0.1s ease, filter 0.15s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Grey until the form is complete and a receipt is chosen; still tappable so it can say what's missing. */
+.cta.is-locked {
+  background: var(--color-upload);
+  color: #7a7a7a;
 }
 
 .cta:disabled {
