@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
   <main class="page">
@@ -52,6 +52,7 @@
         <p class="deposit__text">
           Buat bayaran deposit sebanyak RM175, kemudian muat naik resit pembayaran untuk mengesahkan tempahan anda.
         </p>
+        <button class="qr-button" type="button" id="qr-button" aria-haspopup="dialog">View QR</button>
 
         <label class="upload" for="receipt">
           <svg class="upload__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -82,6 +83,16 @@
     </div>
   </div>
 
-  <script src="script.js?v=8"></script>
+  <div class="overlay" id="qr-overlay" hidden>
+    <div class="card" role="dialog" aria-modal="true" aria-label="QR pembayaran deposit" tabindex="-1">
+      <img class="card__qr" src="assets/duitnow-qr.jpg" alt="Kod QR DuitNow untuk bayaran deposit" width="118" height="126" />
+      <div class="card__payee">
+        <p>MUHAMMAD FIRDAUS BIN ABDULLAH</p>
+        <p>MAE</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=9"></script>
 </body>
 </html>

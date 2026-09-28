@@ -46,7 +46,7 @@ p {
 
 /* Header */
 .site-header {
-  margin-bottom: 26px;
+  margin-bottom: 16px;
   text-align: center;
 }
 
@@ -126,7 +126,7 @@ p {
 
 /* Offer + form */
 .offer {
-  margin-top: 23px;
+  margin-top: 14px;
 }
 
 .offer__text {
@@ -185,12 +185,34 @@ p {
   font-size: 12px;
 }
 
+.qr-button {
+  display: block;
+  min-width: 78px;
+  margin: 9px auto 0;
+  padding: 10px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--color-upload);
+  color: var(--color-text);
+  font: 400 12px/normal "Inter", system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.qr-button:active {
+  filter: brightness(0.95);
+}
+
+.qr-button:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
 .upload {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: 23px;
   padding: 10px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-field);
@@ -219,10 +241,13 @@ p {
 
 /* Status message */
 .form-message {
-  min-height: 1em;
-  margin-top: 24px;
+  margin-top: 12px;
   font-size: 12px;
   text-align: center;
+}
+
+.form-message:empty {
+  display: none;
 }
 
 .form-message.is-error {
@@ -235,7 +260,7 @@ p {
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 24px;
+  margin-top: 19px;
   padding: 14px 16px;
   border: 0;
   border-radius: var(--radius-cta);
@@ -323,6 +348,21 @@ p {
 .card__text {
   max-width: 322px;
   font-size: 16px;
+}
+
+.card__qr {
+  display: block;
+  width: 118px;
+  height: 126px;
+  object-fit: cover;
+}
+
+.card__payee {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 @keyframes overlay-in {

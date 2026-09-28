@@ -11,7 +11,8 @@ const uploadBox = receipt.closest(".upload");
 const message = document.getElementById("form-message");
 const defaultReceiptText = receiptLabel.textContent;
 const successOverlay = document.getElementById("success-overlay");
-const successCard = successOverlay.querySelector(".card");
+const qrOverlay = document.getElementById("qr-overlay");
+const qrButton = document.getElementById("qr-button");
 
 receipt.addEventListener("change", () => {
   const file = receipt.files[0];
@@ -81,24 +82,36 @@ function showMessage(text, isError) {
   message.classList.toggle("is-error", isError);
 }
 
-function showSuccess() {
-  successOverlay.hidden = false;
+function openOverlay(overlay) {
+  overlay.hidden = false;
   document.body.style.overflow = "hidden";
-  successCard.focus();
+  overlay.querySelector(".card").focus();
 }
 
-function hideSuccess() {
-  successOverlay.hidden = true;
+function closeOverlay(overlay) {
+  overlay.hidden = true;
   document.body.style.overflow = "";
 }
 
-// Tap outside the card, or press Escape, to close.
-successOverlay.addEventListener("click", (event) => {
-  if (event.target === successOverlay) hideSuccess();
+// Tap outside a card, or press Escape, to close it.
+[successOverlay, qrOverlay].forEach((overlay) => {
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) closeOverlay(overlay);
+  });
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !successOverlay.hidden) hideSuccess();
+  if (event.key !== "Escape") return;
+  if (!qrOverlay.hidden) {
+    closeOverlay(qrOverlay);
+    qrButton.focus();
+  }
+  if (!successOverlay.hidden) closeOverlay(successOverlay);
+});
+
+qrButton.addEventListener("click", () => openOverlay(qrOverlay));
+qrOverlay.addEventListener("click", (event) => {
+  if (event.target === qrOverlay) qrButton.focus();
 });
 
 function readAsBase64(file) {
@@ -175,7 +188,7 @@ form.addEventListener("submit", async (event) => {
     checkPhone();
     receiptLabel.textContent = defaultReceiptText;
     updateFormState();
-    showSuccess();
+    openOverlay(successOverlay);
   } catch (err) {
     console.error(err);
     showMessage("Maaf, tempahan tidak dapat dihantar. Sila cuba lagi.", true);
