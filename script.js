@@ -10,6 +10,8 @@ const receiptLabel = document.getElementById("receipt-label");
 const uploadBox = receipt.closest(".upload");
 const message = document.getElementById("form-message");
 const defaultReceiptText = receiptLabel.textContent;
+const successOverlay = document.getElementById("success-overlay");
+const successCard = successOverlay.querySelector(".card");
 
 receipt.addEventListener("change", () => {
   const file = receipt.files[0];
@@ -39,6 +41,26 @@ function showMessage(text, isError) {
   message.textContent = text;
   message.classList.toggle("is-error", isError);
 }
+
+function showSuccess() {
+  successOverlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  successCard.focus();
+}
+
+function hideSuccess() {
+  successOverlay.hidden = true;
+  document.body.style.overflow = "";
+}
+
+// Tap outside the card, or press Escape, to close.
+successOverlay.addEventListener("click", (event) => {
+  if (event.target === successOverlay) hideSuccess();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !successOverlay.hidden) hideSuccess();
+});
 
 function readAsBase64(file) {
   return new Promise((resolve, reject) => {
@@ -104,10 +126,10 @@ form.addEventListener("submit", async (event) => {
     const result = await response.json();
     if (!result.ok) throw new Error(result.error || "request_failed");
 
-    showMessage("Terima kasih! Tempahan anda telah diterima. Kami akan menghubungi anda tidak lama lagi.", false);
     form.reset();
     receiptLabel.textContent = defaultReceiptText;
     updateUploadState();
+    showSuccess();
   } catch (err) {
     console.error(err);
     showMessage("Maaf, tempahan tidak dapat dihantar. Sila cuba lagi.", true);

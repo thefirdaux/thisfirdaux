@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
   <main class="page">
@@ -68,6 +68,20 @@
     </form>
   </main>
 
-  <script src="script.js?v=4"></script>
+  <div class="overlay" id="success-overlay" hidden>
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="success-title" aria-describedby="success-text" tabindex="-1">
+      <div class="card__head">
+        <svg class="card__icon" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+          <path d="M46.6667 14L21 39.6667L9.33333 28" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <h2 class="card__title" id="success-title">Slot anda berjaya di tempah</h2>
+      </div>
+      <p class="card__text" id="success-text">
+        Tahniah ! Slot anda untuk promosi ini telah berjaya ditempah. Firdaus akan menghubungi anda untuk memulakan projek website anda.
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js?v=5"></script>
 </body>
 </html>
