@@ -14,12 +14,25 @@ const defaultReceiptText = receiptLabel.textContent;
 receipt.addEventListener("change", () => {
   const file = receipt.files[0];
   receiptLabel.textContent = file ? file.name : defaultReceiptText;
-  uploadBox.classList.toggle("has-file", Boolean(file));
   uploadBox.removeAttribute("aria-invalid");
 });
 
-form.querySelectorAll(".field").forEach((input) => {
-  input.addEventListener("input", () => input.removeAttribute("aria-invalid"));
+const fields = form.querySelectorAll(".field");
+
+function isFieldValid(input) {
+  return input.checkValidity() && input.value.trim() !== "";
+}
+
+// Switch the upload button to Variant 2 once name, email and phone are all filled in.
+function updateUploadState() {
+  uploadBox.classList.toggle("is-ready", [...fields].every(isFieldValid));
+}
+
+fields.forEach((input) => {
+  input.addEventListener("input", () => {
+    input.removeAttribute("aria-invalid");
+    updateUploadState();
+  });
 });
 
 function showMessage(text, isError) {
@@ -46,8 +59,8 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   let firstInvalid = null;
-  form.querySelectorAll(".field").forEach((input) => {
-    const valid = input.checkValidity() && input.value.trim() !== "";
+  fields.forEach((input) => {
+    const valid = isFieldValid(input);
     if (valid) input.removeAttribute("aria-invalid");
     else input.setAttribute("aria-invalid", "true");
     if (!valid && !firstInvalid) firstInvalid = input;
@@ -94,7 +107,7 @@ form.addEventListener("submit", async (event) => {
     showMessage("Terima kasih! Tempahan anda telah diterima. Kami akan menghubungi anda tidak lama lagi.", false);
     form.reset();
     receiptLabel.textContent = defaultReceiptText;
-    uploadBox.classList.remove("has-file");
+    updateUploadState();
   } catch (err) {
     console.error(err);
     showMessage("Maaf, tempahan tidak dapat dihantar. Sila cuba lagi.", true);

@@ -3,6 +3,8 @@
   --color-border: #d9d9d9;
   --color-placeholder: #d9d9d9;
   --color-accent: #ceff00;
+  --color-upload: #d9d9d9;
+  --color-upload-ready: #0088ff;
   --color-error: #d92d20;
   --color-bg: #fff;
   --radius-field: 8px;
@@ -191,7 +193,16 @@ p {
   padding: 10px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-field);
+  background: var(--color-upload);
+  color: var(--color-text);
   cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Variant 2: shown once name, email and phone are filled in */
+.upload.is-ready {
+  background: var(--color-upload-ready);
+  color: #fff;
 }
 
 .upload__icon {
@@ -200,14 +211,9 @@ p {
 
 .upload__label {
   overflow: hidden;
-  color: var(--color-placeholder);
   font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.upload.has-file .upload__label {
-  color: var(--color-text);
 }
 
 /* Status message */
