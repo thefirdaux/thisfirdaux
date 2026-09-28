@@ -20,6 +20,16 @@ receipt.addEventListener("change", () => {
 });
 
 const fields = form.querySelectorAll(".field");
+const phoneInput = form.elements.phone;
+const MIN_PHONE_DIGITS = 10;
+const PHONE_ERROR = "Sila masukkan nombor telefon yang sah (sekurang-kurangnya 10 digit).";
+
+// Count digits only, so "012-345 6789" and "+60 12 345 6789" are both accepted.
+function checkPhone() {
+  const digits = phoneInput.value.replace(/\D/g, "").length;
+  phoneInput.setCustomValidity(digits >= MIN_PHONE_DIGITS ? "" : PHONE_ERROR);
+}
+checkPhone();
 
 function isFieldValid(input) {
   return input.checkValidity() && input.value.trim() !== "";
@@ -32,9 +42,21 @@ function updateUploadState() {
 
 fields.forEach((input) => {
   input.addEventListener("input", () => {
+    if (input === phoneInput) {
+      checkPhone();
+      if (phoneInput.checkValidity() && message.textContent === PHONE_ERROR) showMessage("", false);
+    }
     input.removeAttribute("aria-invalid");
     updateUploadState();
   });
+});
+
+// Flag a too-short phone number as soon as the user leaves the field.
+phoneInput.addEventListener("blur", () => {
+  if (phoneInput.value.trim() !== "" && !phoneInput.checkValidity()) {
+    phoneInput.setAttribute("aria-invalid", "true");
+    showMessage(PHONE_ERROR, true);
+  }
 });
 
 function showMessage(text, isError) {
@@ -91,6 +113,12 @@ form.addEventListener("submit", async (event) => {
   const file = receipt.files[0];
   if (!file) uploadBox.setAttribute("aria-invalid", "true");
 
+  if (firstInvalid === phoneInput && phoneInput.value.trim() !== "") {
+    showMessage(PHONE_ERROR, true);
+    phoneInput.focus();
+    return;
+  }
+
   if (firstInvalid || !file) {
     showMessage("Sila lengkapkan semua maklumat dan muat naik resit pembayaran.", true);
     (firstInvalid || receipt).focus();
@@ -127,6 +155,7 @@ form.addEventListener("submit", async (event) => {
     if (!result.ok) throw new Error(result.error || "request_failed");
 
     form.reset();
+    checkPhone();
     receiptLabel.textContent = defaultReceiptText;
     updateUploadState();
     showSuccess();
