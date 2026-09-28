@@ -22,12 +22,15 @@ receipt.addEventListener("change", () => {
 const fields = form.querySelectorAll(".field");
 const phoneInput = form.elements.phone;
 const MIN_PHONE_DIGITS = 10;
-const PHONE_ERROR = "Sila masukkan nombor telefon yang sah (sekurang-kurangnya 10 digit).";
+const MAX_PHONE_DIGITS = 15;
+const PHONE_ERROR = "Sila masukkan nombor telefon yang sah (nombor sahaja, sekurang-kurangnya 10 digit).";
 
-// Count digits only, so "012-345 6789" and "+60 12 345 6789" are both accepted.
+// Numbers only: strip anything else as it's typed or pasted ("+60 12-345" becomes "6012345").
 function checkPhone() {
-  const digits = phoneInput.value.replace(/\D/g, "").length;
-  phoneInput.setCustomValidity(digits >= MIN_PHONE_DIGITS ? "" : PHONE_ERROR);
+  // Limit after stripping, so a pasted "+60 12-345 6789" keeps all its digits.
+  const digitsOnly = phoneInput.value.replace(/\D/g, "").slice(0, MAX_PHONE_DIGITS);
+  if (phoneInput.value !== digitsOnly) phoneInput.value = digitsOnly;
+  phoneInput.setCustomValidity(digitsOnly.length >= MIN_PHONE_DIGITS ? "" : PHONE_ERROR);
 }
 checkPhone();
 
@@ -139,7 +142,7 @@ form.addEventListener("submit", async (event) => {
 
   try {
     const payload = {
-      name: form.elements.name.value.trim(),
+      name: form.elements.name.value.trim().replace(/\s+/g, " "),
       email: form.elements.email.value.trim(),
       phone: form.elements.phone.value.trim(),
       receipt: { name: file.name, type: file.type, data: await readAsBase64(file) },

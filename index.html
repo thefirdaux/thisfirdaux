@@ -37,13 +37,13 @@
 
         <div class="fields">
           <label class="visually-hidden" for="name">Nama</label>
-          <input class="field" id="name" name="name" type="text" placeholder="Nama" autocomplete="name" required />
+          <input class="field" id="name" name="name" type="text" placeholder="Nama" autocomplete="name" autocapitalize="words" spellcheck="false" required />
 
           <label class="visually-hidden" for="email">Alamat email</label>
           <input class="field" id="email" name="email" type="email" placeholder="Alamat email" autocomplete="email" required />
 
           <label class="visually-hidden" for="phone">No.Telefon</label>
-          <input class="field" id="phone" name="phone" type="tel" placeholder="No.Telefon" autocomplete="tel" inputmode="tel" required />
+          <input class="field" id="phone" name="phone" type="tel" placeholder="No.Telefon" autocomplete="tel" inputmode="numeric" pattern="[0-9]*" required />
         </div>
       </section>
 
@@ -82,6 +82,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
