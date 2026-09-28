@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Memiliki Website Sendiri</title>
+  <meta name="description" content="Dapatkan landing page profesional pada RM250, daripada harga biasa RM600." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="hero__eyebrow">Ini adalah peluang anda</p>
+      <h1 class="hero__title">Memiliki Website Sendiri</h1>
+
+      <div class="collage" aria-hidden="true">
+        <img class="collage__img collage__img--1" src="assets/site-1.png" alt="" />
+        <img class="collage__img collage__img--2" src="assets/site-2.png" alt="" />
+        <img class="collage__img collage__img--3" src="assets/site-3.png" alt="" />
+        <img class="collage__img collage__img--4" src="assets/site-4.png" alt="" />
+      </div>
+    </section>
+
+    <form id="booking-form" class="booking" novalidate>
+      <section class="offer">
+        <p class="offer__text">
+          Tawaran istemewa untuk 5 pelanggan sahaja.<br />
+          Dapatkan landing page profesional pada RM250, daripada harga biasa RM600
+        </p>
+
+        <div class="fields">
+          <label class="visually-hidden" for="name">Nama</label>
+          <input class="field" id="name" name="name" type="text" placeholder="Nama" autocomplete="name" required />
+
+          <label class="visually-hidden" for="email">Alamat email</label>
+          <input class="field" id="email" name="email" type="email" placeholder="Alamat email" autocomplete="email" required />
+
+          <label class="visually-hidden" for="phone">No.Telefon</label>
+          <input class="field" id="phone" name="phone" type="tel" placeholder="No.Telefon" autocomplete="tel" inputmode="tel" required />
+        </div>
+      </section>
+
+      <section class="deposit">
+        <h2 class="deposit__title">Sahkan slot anda dengan deposit 50%</h2>
+        <p class="deposit__text">
+          Buat bayaran deposit sebanyak RM175, kemudian muat naik resit pembayaran untuk mengesahkan tempahan anda
+        </p>
+
+        <label class="upload" for="receipt">
+          <img class="upload__icon" src="assets/upload.svg" alt="" width="20" height="20" />
+          <span class="upload__label" id="receipt-label">Muat naik resit pembayaran</span>
+          <input class="visually-hidden" id="receipt" name="receipt" type="file" accept="image/jpeg,image/png,image/heic,image/heif,image/webp,application/pdf" required />
+        </label>
+      </section>
+
+      <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+
+      <button class="cta" type="submit">Tempah Slot</button>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
