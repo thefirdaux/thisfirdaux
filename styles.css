@@ -38,7 +38,18 @@ p {
 .page {
   max-width: 402px;
   margin: 0 auto;
-  padding: calc(54px + env(safe-area-inset-top)) var(--gutter) calc(40px + env(safe-area-inset-bottom));
+  padding: calc(30px + env(safe-area-inset-top)) var(--gutter) calc(40px + env(safe-area-inset-bottom));
+}
+
+/* Header */
+.site-header {
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.brand {
+  font-size: 14px;
+  font-weight: 700;
 }
 
 /* Hero */
@@ -157,7 +168,7 @@ p {
 
 /* Deposit */
 .deposit {
-  margin-top: 40px;
+  margin-top: 30px;
   text-align: center;
 }
 
